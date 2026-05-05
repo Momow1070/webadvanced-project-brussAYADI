@@ -23,9 +23,42 @@
           <input type="text" id="searchInput" placeholder="Zoek op naam hier...">
           <span class="search-icon">🔍</span>
         </div>
+
+        <div class="filter-group">
+          <label for="categoryFilter" class="sr-only">Filter op categorie</label>
+          <select id="categoryFilter">
+            <option value="all">Alle categorieën</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="gemeenteFilter" class="sr-only">Filter op gemeente</label>
+          <select id="gemeenteFilter">
+            <option value="all">Alle gemeenten</option>
+          </select>
+          </div>
+
+
+          <div class="filter-group">
+          <label for="sortSelect" class="sr-only">Sorteer</label>
+          <select id="sortSelect">
+            <option value="name-asc">Naam (A-Z)</option>
+            <option value="name-desc">Naam (Z-A)</option>
+            <option value="category-asc">Ctegorie (A-Z)</option>
+          </select>
+        </div>
+
+        <div class="content-layout">
+        
+        <h2>Mijn favorieten</h2>
+        <div id="favoritesList" class="favorites-container">
+            <p class="empty-favorites">Je hebt nog geen favorieten toegevoegd.</p>
+          </div>
+          </div>
       </main>
 
     </div>
+    // JS inject
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
