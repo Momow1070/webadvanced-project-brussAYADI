@@ -5,6 +5,7 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Brusselse Cultuurverkenner</title>
+    <link rel="stylesheet" href="src/style.css">
   </head>
   <body>
     <div id="app" class="app-container">
@@ -18,6 +19,7 @@
       </header>
 
       <main class="main-content">
+        <section class="controls glass-panel">
         <div class="search-group">
           <label for="searchInput" class="sr-only">Zoek op naam</label>
           <input type="text" id="searchInput" placeholder="Zoek op naam hier...">
@@ -47,18 +49,28 @@
             <option value="category-asc">Ctegorie (A-Z)</option>
           </select>
         </div>
+        </section>
 
         <div class="content-layout">
-        
-        <h2>Mijn favorieten</h2>
-        <div id="favoritesList" class="favorites-container">
+        <section class="results-section">
+          <div class="results-header">
+            <h2 id="resultsInfo">0 resultaten gevonden</h2>
+          </div>
+          <div id="loadingIndicator" class="loading-indicator">Laden...</div>
+          <div id="venueList" class="venue-grid"></div>
+        </section>
+
+        <aside class="sidebar glass-panel">
+          <h2>Mijn Favorieten</h2>
+          <div id="favoritesList" class="favorites-container">
             <p class="empty-favorites">Je hebt nog geen favorieten toegevoegd.</p>
           </div>
+        </aside>
           </div>
       </main>
 
     </div>
-    // JS inject
+     <!-- JS inject -->
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
