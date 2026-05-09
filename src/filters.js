@@ -53,7 +53,33 @@ export const applyFilters = (data, filters) => {
   });
 
 return filteredData;
-}
+};
+
+// Unieke categories voor onze select dropdown.
+
+export const extractCategories = (data) => {
+  const categories = new Set();
+  data.forEach(venue => {
+    if (venue.visit_category_nl_multi) {
+      venue.visit_category_nl_multi.forEach(cat => categories.add(cat));
+    }
+  });
+  return Array.from(categories).sort();
+};
+
+//  Unieke gemeentes 
+
+export const extractMunicipalities = (data) => {
+  const gemeentes = new Set();
+  data.forEach(venue => {
+    const gemee = venue.add_municipality_nl || venue.add_municipality_fr;
+    if (gemee) {
+      gemeentes.add(gemee);
+    }
+  });
+  return Array.from(gemeentes).sort();
+};
+
 
 
 
