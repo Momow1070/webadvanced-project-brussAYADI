@@ -84,3 +84,41 @@ export const renderVenues = (venues, onFavoriteClick) => {
     });
   });
 };
+
+
+// Favorieten lijst in sidebar renderen
+
+export const renderFavoritesList = (onRemoveClick) => {
+  if (!elements.favoritesList) return;
+
+  const favorites = getFavorites();
+  
+  if (favorites.length === 0) {
+    elements.favoritesList.innerHTML = '<p class="empty-favorites">Je hebt nog geen favorieten toegevoegd.</p>';
+    return;
+  }
+
+  const listHtml = favorites.map(fav => `
+    <div class="favorite-item">
+      <div class="favorite-info">
+        <div class="favorite-name" title="${fav.name}">${fav.name}</div>
+        <div class="favorite-cat">${fav.category}</div>
+      </div>
+      <button class="btn-remove" aria-label="Verwijder favoriet" data-id="${fav.id}">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+  `).join('');
+
+  elements.favoritesList.innerHTML = listHtml;
+
+  const removeButtons = elements.favoritesList.querySelectorAll('.btn-remove');
+  removeButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.getAttribute('data-id');
+      if (onRemoveClick) {
+        onRemoveClick(id);
+      }
+    });
+  });
+};
