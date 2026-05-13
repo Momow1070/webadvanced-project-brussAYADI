@@ -122,3 +122,26 @@ export const renderFavoritesList = (onRemoveClick) => {
     });
   });
 };
+
+// Opties toevoegen aan select dropdown 
+
+export const populateSelect = (selectId, options, defaultText) => {
+  const select = document.getElementById(selectId);
+  if (!select) return;
+
+  const html = `<option value="all">${defaultText}</option>` + options.map(opt => `<option value="${opt}">${opt}</option>`).join('');
+
+  select.innerHTML = html;
+}
+
+// Loading state 
+
+export const toggleLoading = (isLoading) => {
+  if (elements.loadingIndicator) {
+    elements.loadingIndicator.style.display = isLoading ? 'block' : 'none';
+  }
+};
+
+
+
+
