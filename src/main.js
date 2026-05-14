@@ -1,6 +1,6 @@
 'use strict';
 
-import '../css/style.css';
+import './css/style.css';
 import { fetchVenues } from './api.js';
 import { renderVenues, renderFavoritesList, populateSelect, toggleLoading } from './ui.js';
 import { applyFilters, extractCategories, extractMunicipalities } from './filters.js';
