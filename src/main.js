@@ -16,7 +16,7 @@ const sortSelect = document.getElementById('sortSelect');
 
 // UI updaten op basis van huidige staat 
 const updateView = () => {
-    const filteredData = applyFilters(allVenues, activeFilters);
+  const filteredData = applyFilters(allVenues, activeFilters);
   renderVenues(filteredData, handleFavoriteClick);
   renderFavoritesList(handleRemoveFavoriteClick);
 };
@@ -24,14 +24,14 @@ const updateView = () => {
 // "Favoriet" in kaarten laten werken 
 
 const handleFavoriteClick = (venue) => {
-    const isNowfav = toggleFavorite(venue);
-    renderFavoritesList(handleRemoveFavoriteClick);
-    return isNowfav;
+  const isNowfav = toggleFavorite(venue);
+  renderFavoritesList(handleRemoveFavoriteClick);
+  return isNowfav;
 };
 
 const handleRemoveFavoriteClick = (id) => {
-    toggleFavorite({ id });
-    updateView();
+  toggleFavorite({ id });
+  updateView();
 };
 
 const setupEventListeners = () => {
@@ -43,25 +43,55 @@ const setupEventListeners = () => {
     if (val !== cleanedVal) {
       searchInput.value = cleanedVal;
     }
-    
+
     activeFilters.search = cleanedVal;
     updateView();
   });
 
-    categoryFilter.addEventListener('change', (e) => {
+  categoryFilter.addEventListener('change', (e) => {
     activeFilters.category = e.target.value;
     updateView();
   });
 
-    municipalityFilter.addEventListener('change', (e) => {
+  municipalityFilter.addEventListener('change', (e) => {
     activeFilters.municipality = e.target.value;
     updateView();
   });
 
-    sortSelect.addEventListener('change', (e) => {
+  sortSelect.addEventListener('change', (e) => {
     activeFilters.sort = e.target.value;
     updateView();
   });
-  };
+};
 
-  
+
+// Initalisatie van app
+const init = async () => {
+  setupTheme();
+  setupEventListeners();
+  toggleLoading(true);
+
+  // fetchen van data
+  allVenues = await fetchVenues();
+
+  toggleLoading(false);
+
+  if (allVenues.length > 0) {
+    // filters vullen met data
+    const categories = extractCategories(allVenues);
+    const municipalities = extractMunicipalities(allVenues);
+
+    populateSelect('categoryFilter', categories, 'Alle categorieën');
+    populateSelect('municipalityFilter', municipalities, 'Alle gemeenten');
+
+    // initiele render
+    updateView();
+  } else {
+    document.getElementById('venueList').innerHTML = '<p class="empty-favorites" style="color: var(--danger-color);">Kon geen data ophalen van de API. Controleer je netwerkverbinding.</p>';
+  }
+};
+
+// Applicatie zal alleen starten wanneer DOM ready is
+document.addEventListener('DOMContentLoaded', init);
+
+
