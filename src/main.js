@@ -14,6 +14,14 @@ const categoryFilter = document.getElementById('categoryFilter');
 const gemeenteFilter = document.getElementById('gemeenteFilter');
 const sortSelect = document.getElementById('sortSelect');
 
+let allVenues = [];
+const activeFilters = {
+  search: '',
+  category: 'all',
+  gemeente: 'all',
+  sort: 'name-asc',
+};
+
 // UI updaten op basis van huidige staat 
 const updateView = () => {
   const filteredData = applyFilters(allVenues, activeFilters);
@@ -53,8 +61,8 @@ const setupEventListeners = () => {
     updateView();
   });
 
-  municipalityFilter.addEventListener('change', (e) => {
-    activeFilters.municipality = e.target.value;
+  gemeenteFilter.addEventListener('change', (e) => {
+    activeFilters.gemeente = e.target.value;
     updateView();
   });
 
@@ -67,7 +75,6 @@ const setupEventListeners = () => {
 
 // Initalisatie van app
 const init = async () => {
-  setupTheme();
   setupEventListeners();
   toggleLoading(true);
 
@@ -77,12 +84,12 @@ const init = async () => {
   toggleLoading(false);
 
   if (allVenues.length > 0) {
-    // filters vullen met data
+    // filters dropdown vullen met data
     const categories = extractCategories(allVenues);
     const municipalities = extractMunicipalities(allVenues);
 
     populateSelect('categoryFilter', categories, 'Alle categorieën');
-    populateSelect('municipalityFilter', municipalities, 'Alle gemeenten');
+    populateSelect('gemeenteFilter', municipalities, 'Alle gemeenten');
 
     // initiele render
     updateView();
