@@ -34,5 +34,34 @@ const handleRemoveFavoriteClick = (id) => {
     updateView();
 };
 
+const setupEventListeners = () => {
 
+  searchInput.addEventListener('input', (e) => {
+    const val = e.target.value;
+    const cleanedVal = val.replace(/\s{2,}/g, ' ');
 
+    if (val !== cleanedVal) {
+      searchInput.value = cleanedVal;
+    }
+    
+    activeFilters.search = cleanedVal;
+    updateView();
+  });
+
+    categoryFilter.addEventListener('change', (e) => {
+    activeFilters.category = e.target.value;
+    updateView();
+  });
+
+    municipalityFilter.addEventListener('change', (e) => {
+    activeFilters.municipality = e.target.value;
+    updateView();
+  });
+
+    sortSelect.addEventListener('change', (e) => {
+    activeFilters.sort = e.target.value;
+    updateView();
+  });
+  };
+
+  
