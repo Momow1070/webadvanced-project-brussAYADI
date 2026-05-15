@@ -63,6 +63,7 @@ export const renderVenues = (venues, onFavoriteClick) => {
   }).join('');
 
   elements.venueList.innerHTML = cardsHtml;
+  setupIntersectionObserver();
 
 
   const favButtons = elements.venueList.querySelectorAll('.btn-favorite');
