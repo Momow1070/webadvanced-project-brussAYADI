@@ -117,6 +117,28 @@ body {
   min-width: 160px;
 }
 
+.search-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.search-input-wrap {
+  position: relative;
+}
+
+.search-error {
+  font-size: 0.85rem;
+  color: var(--red);
+  margin: 0;
+  padding-left: 4px;
+}
+
+.search-group input.input-invalid {
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
+}
+
 .search-group input,
 .filter-group select {
   width: 100%;
