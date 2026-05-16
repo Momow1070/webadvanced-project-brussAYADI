@@ -4,12 +4,14 @@ import './css/style.css';
 import { fetchVenues } from './api.js';
 import { renderVenues, renderFavoritesList, populateSelect, toggleLoading } from './ui.js';
 import { applyFilters, extractCategories, extractMunicipalities } from './filters.js';
-import { toggleFavorite, isFavorite } from './favorites.js';
-import { saveToStorage, getFromStorage } from './storage.js';
+import { toggleFavorite } from './favorites.js';
+import { validateSearch } from './validation.js';
 
-// DOm Element(en)
+// DOM Element(en)
 
+const searchForm = document.getElementById('searchForm');
 const searchInput = document.getElementById('searchInput');
+const searchError = document.getElementById('searchError');
 const categoryFilter = document.getElementById('categoryFilter');
 const gemeenteFilter = document.getElementById('gemeenteFilter');
 const sortSelect = document.getElementById('sortSelect');
@@ -42,19 +44,50 @@ const handleRemoveFavoriteClick = (id) => {
   updateView();
 };
 
-const setupEventListeners = () => {
+const showSearchError = (message) => {
+  searchError.textContent = message;
+  searchError.hidden = false;
+  searchInput.classList.add('input-invalid');
+  searchInput.setAttribute('aria-invalid', 'true');
+};
 
-  searchInput.addEventListener('input', (e) => {
-    const val = e.target.value;
-    const cleanedVal = val.replace(/\s{2,}/g, ' ');
+const clearSearchError = () => {
+  searchError.textContent = '';
+  searchError.hidden = true;
+  searchInput.classList.remove('input-invalid');
+  searchInput.setAttribute('aria-invalid', 'false');
+};
 
-    if (val !== cleanedVal) {
-      searchInput.value = cleanedVal;
-    }
+const handleSearchInput = () => {
+  const cleanedVal = searchInput.value.replace(/\s{2,}/g, ' ');
 
-    activeFilters.search = cleanedVal;
+  if (searchInput.value !== cleanedVal) {
+    searchInput.value = cleanedVal;
+  }
+
+  const result = validateSearch(cleanedVal);
+
+  if (!result.valid) {
+    showSearchError(result.error);
+    activeFilters.search = '';
     updateView();
+    return;
+  }
+
+  clearSearchError();
+  activeFilters.search = result.value;
+  updateView();
+};
+
+const setupEventListeners = () => {
+  if (!searchForm || !searchInput || !searchError) return;
+
+  searchForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    handleSearchInput();
   });
+
+  searchInput.addEventListener('input', handleSearchInput);
 
   categoryFilter.addEventListener('change', (e) => {
     activeFilters.category = e.target.value;
