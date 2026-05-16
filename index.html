@@ -20,11 +20,14 @@
 
       <main class="main-content">
         <section class="controls glass-panel">
-        <div class="search-group">
+        <form id="searchForm" class="search-group" novalidate>
           <label for="searchInput" class="sr-only">Zoek op naam</label>
-          <input type="text" id="searchInput" placeholder="Zoek op naam hier...">
-          <span class="search-icon">🔍</span>
-        </div>
+          <div class="search-input-wrap">
+            <input type="search" id="searchInput" name="search" placeholder="Zoek op naam hier..." maxlength="80" autocomplete="off">
+            <span class="search-icon" aria-hidden="true">🔍</span>
+          </div>
+          <p id="searchError" class="search-error" role="alert" hidden></p>
+        </form>
 
         <div class="filter-group">
           <label for="categoryFilter" class="sr-only">Filter op categorie</label>
