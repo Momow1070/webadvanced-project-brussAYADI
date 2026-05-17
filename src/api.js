@@ -8,6 +8,7 @@ const API_URL = "https://opendata.brussels.be/api/explore/v2.1/catalog/datasets/
 const LIMIT = 100; // Ik zal genoeg records fetchen zodat filtering goed werkt
 
 // Hier gebruik ik async en arrow functies
+// fetch() geeft een Promise terug, we behandelen het met async/wait in fetchVenues.
 export const fetchVenues = async () => {
     try{
         const response = await fetch(`${API_URL}?limit=${LIMIT}`)
